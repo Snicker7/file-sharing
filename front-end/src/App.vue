@@ -9,8 +9,6 @@
     <div class="title">
       <h1>Nichols Family File Share!</h1>
     </div>
-    <div><router-link to="/">Home</router-link></div>
-    <div><router-link to="/upload">Manage</router-link></div>
   </div>
   <div class="content">
     <router-view />
