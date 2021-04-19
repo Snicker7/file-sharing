@@ -11,7 +11,8 @@ const mongoose = require('mongoose');
 
 // connect to the database
 mongoose.connect('mongodb://localhost:27017/fileshare', {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 // Create a new item in the museum: takes a title and a path to an image.
@@ -103,5 +104,23 @@ app.put('/api/items/:id', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: [
+    'secretValue'
+  ],
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// import the users module and setup its API path
+const users = require("./users.js");
+app.use("/api/users", users.routes);
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));
